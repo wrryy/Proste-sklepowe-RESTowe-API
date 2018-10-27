@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.wrydz.sklep.entity.Basket;
 import pl.wrydz.sklep.service.BasketItemService;
 import pl.wrydz.sklep.service.BasketService;
+import pl.wrydz.sklep.service.ProductService;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,9 +24,11 @@ public class MainController {
 
     private BasketService basketService;
     private BasketItemService basketItemService;
+    protected ProductService productService;
 
     @Autowired
-    public MainController(HttpSession session, BasketService basketService, BasketItemService basketItemService) {
+    public MainController(HttpSession session, BasketService basketService, BasketItemService basketItemService, ProductService productService) {
+        this.productService = productService;
         this.basketService = basketService;
         this.basketItemService = basketItemService;
         session.setAttribute("userId", 1L);
@@ -54,8 +57,8 @@ public class MainController {
         return (long) session.getAttribute("userId");
     }
 
-    @RequestMapping("/dupa")
-    public String getId(HttpSession session){
-        return getUserId(session)+"";
+    @RequestMapping("/test")
+    public void getId(){
+        productService.add();
     }
 }
