@@ -9,8 +9,8 @@ Simple shop REST API. Few functionalities. Using Hibernate with embedded HSQL db
 	<li> PUT /baskets 		- returns total price of items in the basket
 </ul>
 <p> <strong> How to run </strong>
-	mvn clean package
-	java -jar sklep-0.0.1-SNAPSHOT.jar
+	<br>mvn clean package
+	<br>java -jar sklep-0.0.1-SNAPSHOT.jar
 </p>
 
 Assumptions: 
