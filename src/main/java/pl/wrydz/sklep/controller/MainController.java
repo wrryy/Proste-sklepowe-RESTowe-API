@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.wrydz.sklep.entity.Basket;
+import pl.wrydz.sklep.entity.BasketItem;
 import pl.wrydz.sklep.service.BasketItemService;
 import pl.wrydz.sklep.service.BasketService;
 import pl.wrydz.sklep.service.ProductService;
@@ -24,7 +25,7 @@ public class MainController {
 
     private BasketService basketService;
     private BasketItemService basketItemService;
-    protected ProductService productService;
+    private ProductService productService;
 
     @Autowired
     public MainController(HttpSession session, BasketService basketService, BasketItemService basketItemService, ProductService productService) {
@@ -32,6 +33,7 @@ public class MainController {
         this.basketService = basketService;
         this.basketItemService = basketItemService;
         session.setAttribute("userId", 1L);
+        productService.add(); //workaround for importing datasource
     }
 
     @GetMapping("/basket")
@@ -47,7 +49,7 @@ public class MainController {
     }
 
     @PostMapping("/item/{productId}")
-    public void addItemToBasket(@PathVariable long productId, HttpSession session){ basketItemService.addToBasket(getUserId(session), productId); }
+    public BasketItem addItemToBasket(@PathVariable long productId, HttpSession session){ return basketItemService.addToBasket(getUserId(session), productId); }
 
     @PutMapping("/item/{productId}")
     public void removeItemToBasket(@PathVariable long productId, HttpSession session){ basketItemService.removeFromBasket(getUserId(session), productId); }
