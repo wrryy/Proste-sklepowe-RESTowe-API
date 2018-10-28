@@ -19,7 +19,7 @@ public class UserService {
         userRepo.saveAndFlush(user);
     }
 
-    public User getUser(long userId){
+    User getUser(long userId){
         return userRepo.getOne(userId);
     }
 }

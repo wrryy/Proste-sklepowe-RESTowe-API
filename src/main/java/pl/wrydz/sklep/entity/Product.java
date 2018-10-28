@@ -19,10 +19,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column @NotNull
+    @Column
+    @NotNull
     private String name;
 
-    @Column @NotNull
+    @Column
+    @NotNull
     private double price;
 
     public long getId() {

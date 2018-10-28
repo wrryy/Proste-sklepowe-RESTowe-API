@@ -39,8 +39,7 @@ public class MainController {
 
     @GetMapping("/basket")
     public Basket getBasket(HttpSession session) {
-        Basket basket = basketService.getBasket(getUserId(session));
-        return basket;
+        return basketService.getBasket(getUserId(session));
     }
 
     @PutMapping("/basket")
@@ -55,8 +54,7 @@ public class MainController {
 
     @PostMapping("/items/{productId}")
     public BasketItem addItemToBasket(@PathVariable long productId, HttpSession session) {
-        BasketItem item = basketItemService.addToBasket(getUserId(session), productId);
-        return item;
+        return basketItemService.addToBasket(getUserId(session), productId);
     }
 
     @PutMapping("/items/{productId}")

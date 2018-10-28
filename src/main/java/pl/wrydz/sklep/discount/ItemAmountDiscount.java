@@ -21,7 +21,7 @@ public class ItemAmountDiscount implements Discount {
         if (isApplicable(items)) {
             BasketItem item = items.stream().filter(i -> i.getProduct().getId() == productId).findAny().get();
             int discountItems = item.getQuantity() / this.quantity;
-            double itemTotalPrice = discountItems * this.price + (item.getQuantity()-discountItems) * item.getProduct().getPrice();
+            double itemTotalPrice = discountItems * this.price + (item.getQuantity() - discountItems) * item.getProduct().getPrice();
             item.setTotalPrice(itemTotalPrice);
         }
     }
