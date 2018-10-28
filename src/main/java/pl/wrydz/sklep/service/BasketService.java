@@ -1,7 +1,6 @@
 package pl.wrydz.sklep.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import pl.wrydz.sklep.entity.Basket;
 import pl.wrydz.sklep.repository.BasketRepo;
@@ -23,7 +22,7 @@ public class BasketService {
         if(basket == null){
             basket = new Basket();
             basket.setUser(userService.getUser(userId));
-            basketRepo.save(basket);
+            basketRepo.saveAndFlush(basket);
         }
         return basket;
     }
@@ -35,7 +34,6 @@ public class BasketService {
         return basket;
     }
 
-    @Cacheable("baskets")
     public Basket findBasketByUser(long userId){
         return basketRepo.findBasketByUser(userId);
     }
