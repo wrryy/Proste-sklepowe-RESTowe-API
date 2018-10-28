@@ -22,34 +22,40 @@ public class BasketItemService {
         this.basketService = basketService;
     }
 
-    public BasketItem addToBasket(long userId, long productId){
+    public BasketItem addToBasket(long userId, long productId) {
         Basket basket = basketService.findBasketByUser(userId);
         BasketItem item = getItemFromBasket(basket.getId(), productId);
-        if(item == null){
+        if (item == null) {
             item = new BasketItem();
             item.setBasket(basket);
             item.setProduct(productService.getProduct(productId));
             item.setQuantity(1);
         } else {
-            item.setQuantity(item.getQuantity()+1);
+            item.setQuantity(item.getQuantity() + 1);
+        }
+        basketItemRepo.save(item);
+        return item;
+    }
+
+    public BasketItem removeFromBasket(long userId, long productId) {
+        Basket basket = basketService.findBasketByUser(userId);
+        BasketItem item = getItemFromBasket(basket.getId(), productId);
+        if (item != null) {
+            if (item.getQuantity() == 1) {
+                basketItemRepo.delete(item);
+            } else {
+                item.setQuantity(item.getQuantity() - 1);
+                basketItemRepo.save(item);
+            }
         }
         return item;
     }
 
-    public void removeFromBasket(long userId, long productId){
-        Basket basket = basketService.findBasketByUser(userId);
-        BasketItem item = getItemFromBasket(basket.getId(), productId);
-        if(item.getQuantity() == 1){
-            basketItemRepo.delete(item);
-        } else {
-            item.setQuantity(item.getQuantity()-1);
-        }
-    }
-
-    private BasketItem getItemFromBasket(long basketId, long productId){
+    private BasketItem getItemFromBasket(long basketId, long productId) {
         return basketItemRepo.getItemFromBasket(basketId, productId);
     }
-    public double getTotalPrice(long basketId){
+
+    public double getTotalPrice(long basketId) {
         List<BasketItem> items = basketItemRepo.findBasketItemsByBasket(basketId);
         return items.stream().mapToDouble(BasketItem::getTotalPrice).sum();
     }

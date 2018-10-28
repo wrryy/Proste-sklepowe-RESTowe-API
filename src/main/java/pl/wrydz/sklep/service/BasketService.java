@@ -17,9 +17,9 @@ public class BasketService {
         this.basketRepo = basketRepo;
     }
 
-    public Basket getBasket(long userId){
+    public Basket getBasket(long userId) {
         Basket basket = findBasketByUser(userId);
-        if(basket == null){
+        if (basket == null) {
             basket = new Basket();
             basket.setUser(userService.getUser(userId));
             basketRepo.saveAndFlush(basket);
@@ -27,14 +27,14 @@ public class BasketService {
         return basket;
     }
 
-    public Basket checkoutBasket(long userId){
+    public Basket checkoutBasket(long userId) {
         Basket basket = findBasketByUser(userId);
         basket.setClosed(true);
         basketRepo.save(basket);
         return basket;
     }
 
-    public Basket findBasketByUser(long userId){
+    public Basket findBasketByUser(long userId) {
         return basketRepo.findBasketByUser(userId);
     }
 

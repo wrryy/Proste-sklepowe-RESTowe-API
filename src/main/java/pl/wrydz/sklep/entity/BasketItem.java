@@ -1,5 +1,8 @@
 package pl.wrydz.sklep.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,11 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "basket_items")
-public class BasketItem implements Serializable {
+@JsonIgnoreProperties({"id", "basket"})
+@JsonPropertyOrder({"product", "quantity"})
+public class BasketItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +29,7 @@ public class BasketItem implements Serializable {
     @NotNull
     private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "basket_id")
     @NotNull
     private Basket basket;
@@ -59,7 +63,9 @@ public class BasketItem implements Serializable {
         return quantity;
     }
 
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public Basket getBasket() {
         return basket;

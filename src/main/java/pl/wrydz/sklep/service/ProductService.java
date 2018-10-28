@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import pl.wrydz.sklep.entity.Product;
 import pl.wrydz.sklep.repository.ProductRepo;
 
+import java.util.List;
+
 @Service
 public class ProductService {
 
@@ -17,6 +19,7 @@ public class ProductService {
     Product getProduct(long productId){
         return productRepo.getOne(productId);
     }
+
     public void add(){
         for (long i = 1; i < 10; i++) {
             Product prod = new Product();
@@ -26,5 +29,8 @@ public class ProductService {
             productRepo.save(prod);
         }
         productRepo.flush();
+    }
+    public List<Product> findAll(){
+        return productRepo.findAll();
     }
 }
