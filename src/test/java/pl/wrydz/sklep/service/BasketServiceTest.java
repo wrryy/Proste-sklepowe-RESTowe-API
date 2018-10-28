@@ -36,7 +36,7 @@ public class BasketServiceTest {
         basket.setId(1L);
         basket.setUser(new User());
         basket.setClosed(false);
-        Mockito.when(repo.getOne(1L)).thenReturn(basket);
+        Mockito.when(repo.findBasketByUser(1L)).thenReturn(basket);
         Mockito.when(itemService.getBasketTotalPrice(1L)).thenReturn(2.0);
         Basket result = service.checkoutBasket(1L);
 
