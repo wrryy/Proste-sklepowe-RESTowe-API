@@ -24,7 +24,6 @@ public class BasketService {
             basket = new Basket();
             basket.setUser(userService.getUser(userId));
             basketRepo.save(basket);
-            basketRepo.flush();
         }
         return basket;
     }

@@ -22,7 +22,7 @@ public class BasketItemService {
         this.basketService = basketService;
     }
 
-    public void addToBasket(long userId, long productId){
+    public BasketItem addToBasket(long userId, long productId){
         Basket basket = basketService.findBasketByUser(userId);
         BasketItem item = getItemFromBasket(basket.getId(), productId);
         if(item == null){
@@ -33,6 +33,7 @@ public class BasketItemService {
         } else {
             item.setQuantity(item.getQuantity()+1);
         }
+        return item;
     }
 
     public void removeFromBasket(long userId, long productId){

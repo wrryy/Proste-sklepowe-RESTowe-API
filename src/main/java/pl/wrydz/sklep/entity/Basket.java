@@ -14,11 +14,11 @@ import javax.validation.constraints.NotNull;
 @Table(name = "baskets")
 public class Basket {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-//    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id")
     @NotNull
     private User user;
 
