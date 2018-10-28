@@ -34,6 +34,7 @@ public class BasketItemService {
         } else {
             item.setQuantity(item.getQuantity() + 1);
         }
+        setItemPrice(item);
         basketItemRepo.save(item);
         return item;
     }
@@ -46,6 +47,7 @@ public class BasketItemService {
                 basketItemRepo.delete(item);
             } else {
                 item.setQuantity(item.getQuantity() - 1);
+                setItemPrice(item);
                 basketItemRepo.save(item);
             }
         }
@@ -60,8 +62,8 @@ public class BasketItemService {
         List<BasketItem> items = basketItemRepo.findBasketItemsByBasket(basketId);
         return items.stream().mapToDouble(BasketItem::getTotalPrice).sum();
     }
-//    double calculatePrice(BasketItem item){
-//
-//    }
 
+    void setItemPrice(BasketItem item){
+        item.setTotalPrice(item.getQuantity()*item.getProduct().getPrice());
+    }
 }
