@@ -34,7 +34,9 @@ public class BasketItemServiceTest {
     ProductRepo productRepo;
     @MockBean
     private ProductService productService;
+    @Autowired
     private BasketItemService service;
+
     private Basket basket;
     private Product product;
     private BasketItem item;
