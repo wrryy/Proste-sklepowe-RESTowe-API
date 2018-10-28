@@ -39,7 +39,7 @@ public class BasketItemServiceTest {
     private Product product;
     private BasketItem item;
 
-    private static long ID = 1L;
+    private static final long ID = 1L;
 
     @Before
     public void setUp() {

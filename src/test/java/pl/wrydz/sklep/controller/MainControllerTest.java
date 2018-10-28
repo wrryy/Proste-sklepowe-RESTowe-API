@@ -32,7 +32,6 @@ public class MainControllerTest {
     @Before
     public void setUp() {
         mockMvc = webAppContextSetup(webApplicationContext).build();
-
     }
 
     @Test
