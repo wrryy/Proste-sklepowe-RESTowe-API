@@ -14,7 +14,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "baskets")
-@JsonIgnoreProperties({"id", "closed"})
+@JsonIgnoreProperties({"id", "closed", "hibernateLazyInitializer", "handler"})
+
 public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -23,8 +23,8 @@ public class BasketItemService {
         this.productService = productService;
     }
 
-    public BasketItem addToBasket(long userId, long productId) {
-        Basket basket = basketRepo.findBasketByUser(userId);
+    public BasketItem addToBasket(long basketId, long productId) {
+        Basket basket = basketRepo.getOne(basketId);
         BasketItem item = getItemFromBasket(basket.getId(), productId);
         if (item == null) {
             item = new BasketItem();
@@ -39,9 +39,8 @@ public class BasketItemService {
         return item;
     }
 
-    public BasketItem removeFromBasket(long userId, long productId) {
-        Basket basket = basketRepo.findBasketByUser(userId);
-        BasketItem item = getItemFromBasket(basket.getId(), productId);
+    public BasketItem removeFromBasket(long basketId, long productId) {
+        BasketItem item = getItemFromBasket(basketId, productId);
         if (item != null) {
             if (item.getQuantity() == 1) {
                 basketItemRepo.delete(item);
@@ -66,8 +65,8 @@ public class BasketItemService {
     private void setItemPrice(BasketItem item){
         item.setTotalPrice(item.getQuantity()*item.getProduct().getPrice());
     }
-    public List<BasketItem> findAllItemsByBasket(long userId){
-        Basket basket = basketRepo.findBasketByUser(userId);
-        return basketItemRepo.findItemsByBasket(basket.getId());
+
+    public List<BasketItem> findAllItemsByBasket(long basketId){
+        return basketItemRepo.findItemsByBasket(basketId);
     }
 }

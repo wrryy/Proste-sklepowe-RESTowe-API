@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @Scope("session")
-@SessionAttributes({"userId"})
+@SessionAttributes({"userId", "basketId"})
 public class MainController {
 
     private BasketService basketService;
@@ -43,7 +43,9 @@ public class MainController {
      */
     @GetMapping("/baskets")
     public Basket getBasket(HttpSession session) {
-        return basketService.getBasket(getUserId(session));
+        Basket basket = basketService.getBasket(getUserId(session));
+        session.setAttribute("basketId", basket.getId());
+        return basket;
     }
 
     /**
@@ -53,7 +55,7 @@ public class MainController {
      */
     @PutMapping("/baskets")
     public Basket checkoutBasket(HttpSession session) {
-        return basketService.checkoutBasket(getUserId(session));
+        return basketService.checkoutBasket(getBasketId(session));
     }
 
     /**
@@ -72,7 +74,7 @@ public class MainController {
      */
     @GetMapping("/items")
     public List<BasketItem> getAllItems(HttpSession session) {
-        return basketItemService.findAllItemsByBasket(getUserId(session));
+        return basketItemService.findAllItemsByBasket(getBasketId(session));
     }
 
     /**
@@ -83,7 +85,7 @@ public class MainController {
      */
     @PostMapping("/items/{productId}")
     public BasketItem addItemToBasket(@PathVariable long productId, HttpSession session) {
-        return basketItemService.addToBasket(getUserId(session), productId);
+        return basketItemService.addToBasket(getBasketId(session), productId);
     }
 
     /**
@@ -94,7 +96,11 @@ public class MainController {
      */
     @PutMapping("/items/{productId}")
     public BasketItem removeItemToBasket(@PathVariable long productId, HttpSession session) {
-        return basketItemService.removeFromBasket(getUserId(session), productId);
+        return basketItemService.removeFromBasket(getBasketId(session), productId);
+    }
+
+    private long getBasketId(HttpSession session) {
+        return (long) session.getAttribute("basketId");
     }
 
     private long getUserId(HttpSession session) {

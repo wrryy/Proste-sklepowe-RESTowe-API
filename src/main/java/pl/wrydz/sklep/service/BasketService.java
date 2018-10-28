@@ -29,8 +29,8 @@ public class BasketService {
         return basket;
     }
 
-    public Basket checkoutBasket(long userId) {
-        Basket basket = basketRepo.findBasketByUser(userId);
+    public Basket checkoutBasket(long basketId) {
+        Basket basket = basketRepo.getOne(basketId);
         double price = basketItemService.getBasketTotalPrice(basket.getId());
         basket.setClosed(true);
         basket.setBasketPrice(price);
