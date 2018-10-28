@@ -11,9 +11,20 @@ public class ProductService {
 
     public ProductService(ProductRepo itemRepo) {
         this.productRepo = itemRepo;
+
     }
 
-    public Product getProduct(long productId){
+    Product getProduct(long productId){
         return productRepo.getOne(productId);
+    }
+    public void add(){
+        for (long i = 1; i < 10; i++) {
+            Product prod = new Product();
+            prod.setId(i);
+            prod.setName("Prod"+1);
+            prod.setPrice(10*i);
+            productRepo.save(prod);
+        }
+        productRepo.flush();
     }
 }

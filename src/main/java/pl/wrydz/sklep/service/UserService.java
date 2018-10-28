@@ -13,7 +13,12 @@ public class UserService {
     @Autowired
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
+        User user = new User();
+        user.setId(1L);
+        user.setLogin("test");
+        userRepo.saveAndFlush(user);
     }
+
     public User getUser(long userId){
         return userRepo.getOne(userId);
     }
