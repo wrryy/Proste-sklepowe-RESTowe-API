@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.wrydz.sklep.entity.Basket;
@@ -39,15 +38,14 @@ public class MainController {
     }
 
     @GetMapping("/basket")
-    public long getBasket(HttpSession session) {
+    public Basket getBasket(HttpSession session) {
         Basket basket = basketService.getBasket(getUserId(session));
-        session.setAttribute("basket", basket);
-        return basket.getId();
+        return basket;
     }
 
     @PutMapping("/basket")
-    public Basket checkoutBasket(@RequestParam long userId) {
-        return basketService.checkoutBasket(userId);
+    public Basket checkoutBasket(HttpSession session) {
+        return basketService.checkoutBasket(getUserId(session));
     }
 
     @GetMapping("/items")

@@ -1,5 +1,7 @@
 package pl.wrydz.sklep.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "baskets")
+@JsonIgnoreProperties({"id", "closed"})
 public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
