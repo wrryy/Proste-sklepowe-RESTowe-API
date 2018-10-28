@@ -27,7 +27,7 @@ public class Basket {
     private User user;
 
     @Column
-    private boolean closed;
+    private boolean closed = false;
 
     @Column(name = "basket_price")
     private double basketPrice;
