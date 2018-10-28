@@ -11,4 +11,5 @@ public interface BasketRepo extends JpaRepository<Basket, Long> {
 
     @Query(nativeQuery = true, value = "select * from baskets where user_id=:id and closed=0")
     Basket findBasketByUser(@Param("id") long id);
+
 }

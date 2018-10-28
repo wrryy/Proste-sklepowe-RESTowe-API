@@ -4,6 +4,10 @@ import pl.wrydz.sklep.entity.BasketItem;
 
 import java.util.List;
 
+/**
+ * Class implementation of one of the discounts. Reduces price to {@code price} if there will be {@code quantity}
+ * of products with id = {@code productId}
+ */
 public class ItemAmountDiscount implements Discount {
 
     private long productId;

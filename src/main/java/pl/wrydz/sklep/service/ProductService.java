@@ -20,11 +20,14 @@ public class ProductService {
         return productRepo.getOne(productId);
     }
 
+    /**
+     * Workaround for importing data.sql
+     */
     public void add(){
         for (long i = 1; i < 10; i++) {
             Product prod = new Product();
             prod.setId(i);
-            prod.setName("Prod"+1);
+            prod.setName("Prod"+i);
             prod.setPrice(10*i);
             productRepo.save(prod);
         }

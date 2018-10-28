@@ -59,11 +59,15 @@ public class BasketItemService {
     }
 
     double getBasketTotalPrice(long basketId) {
-        List<BasketItem> items = basketItemRepo.findBasketItemsByBasket(basketId);
+        List<BasketItem> items = basketItemRepo.findItemsByBasket(basketId);
         return items.stream().mapToDouble(BasketItem::getTotalPrice).sum();
     }
 
-    void setItemPrice(BasketItem item){
+    private void setItemPrice(BasketItem item){
         item.setTotalPrice(item.getQuantity()*item.getProduct().getPrice());
+    }
+    public List<BasketItem> findAllItemsByBasket(long userId){
+        Basket basket = basketRepo.findBasketByUser(userId);
+        return basketItemRepo.findItemsByBasket(basket.getId());
     }
 }

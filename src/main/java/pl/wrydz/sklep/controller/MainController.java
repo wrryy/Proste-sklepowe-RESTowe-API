@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.wrydz.sklep.entity.Basket;
@@ -37,38 +36,69 @@ public class MainController {
         productService.add(); //workaround for importing datasource
     }
 
-    @GetMapping("/basket")
+    /**
+     * Returns new user basket.
+     * @param session HttpSession
+     * @return {@code Basket}
+     */
+    @GetMapping("/baskets")
     public Basket getBasket(HttpSession session) {
         return basketService.getBasket(getUserId(session));
     }
 
-    @PutMapping("/basket")
+    /**
+     * Returns total price of items in the basket.
+     * @param session HttpSession
+     * @return {@code Basket}
+     */
+    @PutMapping("/baskets")
     public Basket checkoutBasket(HttpSession session) {
         return basketService.checkoutBasket(getUserId(session));
     }
 
-    @GetMapping("/items")
-    public List<Product> getAllItems() {
+    /**
+     * Returns list of all shop products.
+     * @return {@code Basket}
+     */
+    @GetMapping("/products")
+    public List<Product> getAllProducts() {
         return productService.findAll();
     }
 
+    /**
+     * Returns list of items in the basket.
+     * @param session HttpSession
+     * @return {@code List<BasketItem>}
+     */
+    @GetMapping("/items")
+    public List<BasketItem> getAllItems(HttpSession session) {
+        return basketItemService.findAllItemsByBasket(getUserId(session));
+    }
+
+    /**
+     * Put 1 product with {id} in the basket.
+     * @param productId long
+     * @param session HttpSession
+     * @return {@code BasketItem}
+     */
     @PostMapping("/items/{productId}")
     public BasketItem addItemToBasket(@PathVariable long productId, HttpSession session) {
         return basketItemService.addToBasket(getUserId(session), productId);
     }
 
+    /**
+     * Removes 1 product with {id} from the basket.
+     * @param productId long
+     * @param session HttpSession
+     * @return {@code BasketItem}
+     */
     @PutMapping("/items/{productId}")
     public BasketItem removeItemToBasket(@PathVariable long productId, HttpSession session) {
         return basketItemService.removeFromBasket(getUserId(session), productId);
     }
 
-
     private long getUserId(HttpSession session) {
         return (long) session.getAttribute("userId");
     }
 
-    @RequestMapping("/test")
-    public void getId() {
-        productService.add();
-    }
 }

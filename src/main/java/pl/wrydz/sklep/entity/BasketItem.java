@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Wrapper entity for storing {@code Product}s in the basket.
+ */
 @Entity
 @Table(name = "basket_items")
 @JsonIgnoreProperties({"id", "basket"})
@@ -29,7 +32,7 @@ public class BasketItem {
     @NotNull
     private Product product;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "basket_id")
     @NotNull
     private Basket basket;

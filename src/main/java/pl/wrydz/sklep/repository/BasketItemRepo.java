@@ -12,7 +12,7 @@ import java.util.List;
 public interface BasketItemRepo extends JpaRepository<BasketItem, Long> {
 
     @Query(nativeQuery = true, value = "select * from basket_items where basket_id=:id")
-    List<BasketItem> findBasketItemsByBasket(@Param("id") long id);
+    List<BasketItem> findItemsByBasket(@Param("id") long id);
 
     @Query(nativeQuery = true, value = "select * from basket_items where basket_id=:basket_id and product_id=:product_id")
     BasketItem getItemFromBasket(@Param("basket_id") long basketId, @Param("product_id") long productId);
